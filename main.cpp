@@ -1,12 +1,13 @@
 #include <iostream>
 #include "relationship.h"
+#include <windows.h>
 
 using namespace std;
 
 
-// Функция возвращает true, если разница между x и y делится на 5 без остатка
+// Функция возвращает true, если выполняется условие (x < 3 & y < 3) || (x > 3 & y > 3) || (x == y)
 bool f(const int &x, const int &y) {
-    return abs(x - y) % 5 == 0;
+    return (x < 3 & y < 3) || (x > 3 & y > 3) || (x == y);
 }
 
 // Функция всегда возвращает false
@@ -92,27 +93,34 @@ vector<vector<int>> get_equal_relationship(const vector<vector<int>> &S, const v
 
 
 int main() {
+    SetConsoleOutputCP(CP_UTF8);
+
     const vector M = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
-    // const vector<vector<int>> A = create_matrix_relationship(f);
-    const vector<vector<int> > A = {
-        {1, 1, 0, 0, 0, 0, 0, 1, 1, 0},
-        {1, 1, 0, 0, 0, 0, 0, 1, 1, 0},
-        {0, 0, 1, 0, 0, 0, 1, 0, 0, 1},
-        {0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
-        {0, 0, 0, 1, 1, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-        {0, 0, 1, 0, 0, 0, 1, 0, 0, 1},
-        {1, 1, 0, 0, 0, 0, 0, 1, 1, 0},
-        {1, 1, 0, 0, 0, 0, 0, 1, 1, 0},
-        {0, 0, 1, 0, 0, 0, 1, 0, 0, 1},
-    };
+    const vector<pair<int, int> > A_p = generate_relationship(f);
+    print_relationship(A_p);
 
-    vector<vector<int> > factor_set = get_factor_set(A, M);
+    const vector<vector<int>> A_m = create_matrix_relationship(f);
+    print_matrix(A_m);
+
+    is_relationship_reflexive(A_m, 1);
+    is_relationship_antireflexive(A_m, 1);
+    is_relationship_symmetrical(A_m, 1);
+    is_relationship_antisymmetrical(A_m, 1);
+    is_relationship_transitive(A_m, 1);
+    is_relationship_antitransitive(A_m, 1);
+    is_relationship_complete(A_m, 1);
+
+
+    vector<vector<int> > factor_set = get_factor_set(A_m, M);
+
+    cout << endl;
 
     for (auto elem: factor_set) {
         print_vec(elem);
     }
+
+    cout << endl;
 
     const vector<vector<int>> R = get_equal_relationship(factor_set, M);
 

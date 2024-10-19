@@ -1,36 +1,48 @@
-//
-// Created by bnkr on 14.10.2024.
-//
-
 #ifndef RELATIONSHIP_H
 #define RELATIONSHIP_H
 
 #include <iostream>
 #include <vector>
+#include <windows.h>
 
 using namespace std;
 
 const int M[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
-// Функция возвращает true, если x > y или y > 7
+// Отношение A
 bool f1(const int &x, const int &y) {
     return y > x + 5 || x > y + 5;
 }
 
-// Функция возвращает true, если число, составленное из 10*x + y, делится на 3
+// Отношение B
 bool f2(const int &x, const int &y) {
     return x % 2 == 0 && y % 2 == 0;
 }
 
-// Функция возвращает true, если x четное, а y нечетное
+// Отношение C
 bool f3(const int &x, const int &y) {
     return abs(x - y) > 5;
 }
 
-bool f4(const int &x, const int &y) {
-    return x + y == 6;
+// Вывод пар отношения
+void print_relationship(const vector<pair<int, int> > &relationship) {
+    for (const auto [fst, snd]: relationship) {
+        printf("(%d, %d), ", fst, snd);
+    }
+    cout << endl << endl;
 }
 
+// Генерирует отношения в виде набора пар на основе функции f
+vector<pair<int, int> > generate_relationship(bool (*f)(const int &, const int &)) {
+    vector<pair<int, int> > result;
+    for (int x: M)
+        for (int y: M)
+            if (f(x, y)) {
+                pair pr = {x, y};
+                result.push_back(pr);
+            }
+    return result;
+}
 
 // функция создания матрицы отношения
 vector<vector<int>> create_matrix_relationship(bool (f)(const int&, const int&)) {
