@@ -103,28 +103,24 @@ int main() {
     const vector<vector<int>> A_m = create_matrix_relationship(f);
     print_matrix(A_m);
 
-    is_relationship_reflexive(A_m, 1);
-    is_relationship_antireflexive(A_m, 1);
-    is_relationship_symmetrical(A_m, 1);
-    is_relationship_antisymmetrical(A_m, 1);
-    is_relationship_transitive(A_m, 1);
-    is_relationship_antitransitive(A_m, 1);
-    is_relationship_complete(A_m, 1);
+    const bool equivalence = is_relationship_reflexive(A_m, 1) && is_relationship_symmetrical(A_m, 1) && is_relationship_transitive(A_m, 1);
 
+    if (equivalence) {
+        cout << "Отношение имеет свойство эквивалентности" << endl;
+        cout << endl;
+    } else {
+        cout << "Отношение не имеет свойство эквивалентности" << endl;
+        cout << endl;
+    }
 
+    cout << "Разбиение Ф: " << endl;
     vector<vector<int> > factor_set = get_factor_set(A_m, M);
-
-    cout << endl;
 
     for (auto elem: factor_set) {
         print_vec(elem);
     }
 
     cout << endl;
-
-    const vector<vector<int>> R = get_equal_relationship(factor_set, M);
-
-    print_matrix(R);
 
     return 0;
 }

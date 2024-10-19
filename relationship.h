@@ -69,7 +69,7 @@ vector<vector<int>> create_matrix_relationship(bool (f)(const int&, const int&))
 void print_matrix(const vector<vector<int>>& matrix) {
     for (const auto& row: matrix) {
         for (auto val: row) {
-            cout << val << " & ";
+            cout << val << ", ";
         }
         cout << endl;
     }
